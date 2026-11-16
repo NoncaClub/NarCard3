@@ -1,4 +1,5 @@
 # Keep GitHub Linguist aware of the project's primary source languages.
+# Preserve the source repository's language classification rules.
 *.astro linguist-language=Astro
 *.scss linguist-language=SCSS
 
