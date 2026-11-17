@@ -627,6 +627,30 @@ main { min-height: 70vh; }
   border-radius: 16px;
   border: 1px solid var(--border);
 }
+
+/* KaTeX output generated from inline $...$ and display $$...$$ Markdown. */
+.markdown-body .math-inline {
+  color: var(--text);
+}
+
+.markdown-body .math-display {
+  display: block;
+  max-width: 100%;
+  margin: 1.8em 0;
+  padding: 1.1em 1.25em;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  background: rgba(8, 6, 16, 0.48);
+  color: var(--text);
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-purple) transparent;
+}
+
+.markdown-body .math-display .katex-display {
+  margin: 0;
+}
 .markdown-body .drop-cap::first-letter {
   float: left;
   padding-right: 10px;
@@ -1708,12 +1732,21 @@ img, svg {
 
 @media (max-width: 720px) {
   .showcase-shell { padding: 72px 0 100px; }
+  .showcase-title { font-size: clamp(38px, 12vw, 58px); line-height: 1.04; }
   .markdown-body h2 { font-size: 22px; }
   .markdown-body h3 { font-size: 26px; }
   .markdown-body blockquote { font-size: 20px; padding: 18px 22px; }
   .markdown-body pre[data-language] { padding-top: 48px; }
   .markdown-body pre[data-language]::after { top: 34px; }
   .markdown-body table { font-size: 0.82em; }
+  .markdown-body table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-purple) transparent;
+  }
   .markdown-body th,
   .markdown-body td { padding: 9px 12px; }
 }

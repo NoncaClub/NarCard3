@@ -14,16 +14,18 @@ const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
 ---
 
 {items.length > 0 && (
-  <nav class="toc" data-reveal>
-    <div class="toc-title">Contents</div>
-    <ol>
-      {items.map((h) => (
-        <li class={h.depth === 3 ? 'toc-sub' : ''}>
-          <a href={`#${h.slug}`}>{h.text}</a>
-        </li>
-      ))}
-    </ol>
-  </nav>
+  <details class="toc" data-reveal open>
+    <summary class="toc-title">Contents</summary>
+    <nav aria-label="Table of contents">
+      <ol>
+        {items.map((h) => (
+          <li class={h.depth === 3 ? 'toc-sub' : ''}>
+            <a href={`#${h.slug}`}>{h.text}</a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </details>
 )}
 
 <style>
@@ -38,10 +40,29 @@ const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
     color: var(--accent-purple);
     font-size: 10px;
   }
+
+  .toc-title {
+    cursor: pointer;
+  }
+
+  .toc-title::marker {
+    color: var(--accent-gold);
+  }
+
+  .toc:not([open]) .toc-title {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
 </style>
 
 <script>
   (function () {
+    const toc = document.querySelector<HTMLDetailsElement>('.toc');
+    if (toc && window.matchMedia('(max-width: 720px)').matches) {
+      toc.removeAttribute('open');
+    }
+
     document.querySelectorAll('.toc a[href^="#"]').forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
