@@ -17,14 +17,14 @@
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.9",
     "@astrojs/rss": "^4.0.19",
-    "astro": "^7.4.4",
-    "katex": "^0.16.47",
+    "astro": "^7.4.12",
+    "katex": "^0.19.1",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
-    "sass": "^1.107.1",
+    "sass": "^1.108.2",
     "typescript": "^6.0.3"
   },
   "type": "commonjs"
