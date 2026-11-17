@@ -1,6 +1,15 @@
 ---
+import { unified } from 'unified';
+import rehypeKatex from 'rehype-katex';
+import rehypeRaw from 'rehype-raw';
+import rehypeStringify from 'rehype-stringify';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
 import BackgroundMusic from '../components/global/BackgroundMusic.astro';
 import { posts, tagCounts, type DemoPost } from '../data/posts';
+import editorShowcaseMarkdown from '../content/blog/markdown-editor-complete-showcase.md?raw';
 
 // ============================================
 //  演示内容数据层（模板化展示内容，正式使用时另行撰写）
@@ -28,7 +37,23 @@ function codeBlock(lang: string, code: string) {
   );
 }
 
+const frontmatterEnd = editorShowcaseMarkdown.indexOf('\n---\n', 3);
+const editorShowcaseSource = frontmatterEnd >= 0
+  ? editorShowcaseMarkdown.slice(frontmatterEnd + 5)
+  : editorShowcaseMarkdown;
+const editorShowcaseBody = String(await unified()
+  .use(remarkParse)
+  .use(remarkGfm)
+  .use(remarkMath)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeRaw)
+  .use(rehypeKatex)
+  .use(rehypeStringify)
+  .process(editorShowcaseSource));
+
 function articleBody(post: DemoPost) {
+  if (post.slug === 'markdown-editor-complete-showcase') return editorShowcaseBody;
+
   return [
     `<p><strong>${esc(post.excerpt || 'A short example entry for demonstrating the template.')}</strong></p>`,
     '<p>This is neutral example content for the public template. Replace it with your own writing, documentation, or design notes.</p>',
@@ -37,7 +62,7 @@ function articleBody(post: DemoPost) {
     codeBlock('bash', 'npm install\nnpm run dev'),
     '<h2>Continue writing</h2>',
     '<p>Replace this example with content that belongs to your own project.</p>',
-  ].join('\\n');
+  ].join('\n');
 }
 const postsWithBody = posts.map((post) => ({
   ...post,
